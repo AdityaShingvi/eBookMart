@@ -16,11 +16,14 @@ public class AOPFileAccessAspect {
 	public void validateShare(JoinPoint join) throws Throwable {
 		System.out.println("Before AOP - " + join.getArgs().toString());
 		Object[] objects = join.getArgs();
+		long uid;
 		HttpServletRequest request = (HttpServletRequest)objects[0];
-		long uid = (Long) request.getSession().getAttribute("userid");
-		System.out.println(uid);
-	//	jp.proceed();
-		System.out.println("After AOP");
+		try {
+			uid = (Long) request.getSession().getAttribute("userid");
+		} catch(NullPointerException e){
+			System.out.println("User not logged in");
+			uid = 0;
+		}
 	}
 
 	/*@Around("execution(* com.cmpe275.IFileServiceImpl.unshareFile(..))")
