@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -12,7 +13,9 @@ import org.springframework.aop.aspectj.annotation.*;
 @Aspect
 public class AOPFileAccessAspect {
 
-	@Before("execution(* edu.sjsu.cmpe275.lab3.BookController.getBooks(*))")
+	
+	//Aspect for handling the cross cutting concern of Authentication
+	@Before("execution(* edu.sjsu.cmpe275.lab3.BookController.*Books(*))")
 	public void validateShare(JoinPoint join) throws Throwable {
 		System.out.println("Before AOP - " + join.getArgs().toString());
 		Object[] objects = join.getArgs();
@@ -24,6 +27,11 @@ public class AOPFileAccessAspect {
 			System.out.println("User not logged in");
 			uid = 0;
 		}
+	}
+	
+	@AfterThrowing("execution(* edu.sjsu.cmpe275.lab3.BookController.*(..))")
+	public void handleException(JoinPoint joinPoint){
+		System.out.println("In Exception" + joinPoint);
 	}
 
 	/*@Around("execution(* com.cmpe275.IFileServiceImpl.unshareFile(..))")
