@@ -28,15 +28,15 @@ public class BookController {
 	 * @return
 	 */
 	@RequestMapping(value="/books", method = RequestMethod.GET)
-	public ModelAndView getBooks(HttpServletRequest request){
+	public ModelAndView getBooks(HttpServletRequest request) throws NullPointerException{
 		String action = (String) request.getParameter("action");
-		long uid = (Long) request.getSession().getAttribute("userid");;
-		/*try{
+		long uid;
+		try{
 			uid = (Long) request.getSession().getAttribute("userid");
 		}catch(NullPointerException e){
-			System.out.println("User not logged in");
-			uid = 0;
-		}*/
+			ModelAndView view = new ModelAndView("login");
+			return view;
+		}
 		
 		List<?> list;
 		ModelAndView mv = new ModelAndView("books");

@@ -29,15 +29,9 @@ public class AOPFileAccessAspect {
 		}
 	}
 	
+	//Aspect for handling the exceptions
 	@AfterThrowing("execution(* edu.sjsu.cmpe275.lab3.BookController.*(..))")
 	public void handleException(JoinPoint joinPoint){
-		System.out.println("In Exception" + joinPoint);
+		System.out.println("Exception occured: " + joinPoint.toString() );
 	}
-
-	/*@Around("execution(* com.cmpe275.IFileServiceImpl.unshareFile(..))")
-	public void validateUnShare(ProceedingJoinPoint jp) throws Throwable {}*/
-
-	/*@Around("execution(* com.cmpe275.IFileServiceImpl.readFile(..))")
-	public byte[] validateReadFile(ProceedingJoinPoint jp) throws Throwable {}*/
-
 }
