@@ -16,7 +16,7 @@
 		var quantity = document.getElementById("quantity").value;
 		var regForm = document.forms['buyForm'];
 		regForm.method = "POST";
-		regForm.action = "http://localhost:8080/Poker/buybook?"
+		regForm.action = "<%=request.getContextPath()%>/buybook?"
 				+ "bookid="+bookid
 				+ "&buyerid="+buyerid 
 				+ "&price=" + price
@@ -32,7 +32,7 @@
 		var regForm = document.forms['buyForm'];
 		var bidPrice = document.getElementById("bidPrice").value;
 		regForm.method = "POST";
-		regForm.action = "http://localhost:8080/Poker/placebid?"
+		regForm.action = "<%=request.getContextPath()%>/placebid?"
 				+ "bookid="+bookid
 				+ "&buyerid="+buyerid 
 				+ "&price=" + price
@@ -170,13 +170,13 @@
                     </c:if>
                     
                     <c:if test="${book.bid == 'Y' }">
+                    	<input type="hidden" id="quantity" value=${book.quantity }>
                     	<input type="text" class="form-control" placeholder="Place Bid" id="bidPrice" ><br>
 	                    <div class="text-right">
 	                        <button type="submit" onclick="javascript:placeBid();" class="btn btn-success btn-lg">Bid now</button>
 	                    </div>
                     </c:if>
-					<hr>   
-                    
+					
                 	</div>
           	</form:form>
 			 </div>
